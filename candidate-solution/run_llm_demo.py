@@ -85,7 +85,7 @@ for tc in test_cases:
     obs = loc.get("observations", [])
 
     print(f"📌 CASO: {tc['topic']}")
-    print(f"📍 Contexto MCP Obtenido en Vivo:")
+    print("📍 Contexto MCP Obtenido en Vivo:")
     print(f"   - Ciudad: {loc.get('city')}, {loc.get('country')} (TZ: {loc.get('timezone')})")
     print(f"   - Clima: {weather.get('condition')} | Temp: {weather.get('temperature')}°C | Humedad: {weather.get('humidity')}% | Viento: {weather.get('wind_speed')} km/h")
     print(f"   - Demografía: Población {demo.get('population'):,} hab. | Idioma: {demo.get('language')} | Moneda: {demo.get('currency')}")
