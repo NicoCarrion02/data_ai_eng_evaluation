@@ -90,16 +90,16 @@ class SilverToGoldTransformer:
 
             # Mode calculations
             query_types = group["query_type"].dropna()
-            most_common_query = query_types.mode().iloc[0] if not query_types.empty else "general"
+            most_common_query = query_types.mode().iloc[0] if not query_types.empty else "general_query"
 
             hours = group["hour"].dropna()
-            peak_hour = int(hours.mode().iloc[0]) if not hours.empty else 12
+            peak_hour = int(hours.mode().iloc[0]) if not hours.empty else None
 
             temps = group["temperature"].dropna()
             avg_temp = float(round(temps.mean(), 2)) if not temps.empty else None
 
             weathers = group["weather_condition"].dropna()
-            most_common_weather = weathers.mode().iloc[0] if not weathers.empty else "Soleado"
+            most_common_weather = weathers.mode().iloc[0] if not weathers.empty else None
 
             pos_count = int((group["sentiment"] == "positive").sum())
             neu_count = int((group["sentiment"] == "neutral").sum())
