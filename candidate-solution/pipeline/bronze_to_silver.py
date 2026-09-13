@@ -17,6 +17,52 @@ logger = logging.getLogger("pipeline.bronze_to_silver")
 class BronzeToSilverTransformer:
     """Transforms raw bronze interactions into cleaned and enriched silver records."""
 
+    @staticmethod
+    def validate_record_quality(
+        user_id: Optional[str],
+        timestamp: Any,
+        latitude: Any,
+        longitude: Any,
+        humidity: Any,
+    ) -> Tuple[bool, List[str]]:
+        """Validates incoming Bronze fields and returns (is_valid, validation_errors)."""
+        validation_errors = []
+        if not user_id:
+            validation_errors.append("user_id is missing")
+        if pd.isna(timestamp):
+            validation_errors.append("timestamp is missing")
+
+        if latitude is not None:
+            try:
+                lat_f = float(latitude)
+                if lat_f < -90 or lat_f > 90:
+                    validation_errors.append(f"latitude {lat_f} out of bounds [-90, 90]")
+            except (ValueError, TypeError):
+                validation_errors.append("latitude is not a valid float")
+        else:
+            validation_errors.append("latitude is missing")
+
+        if longitude is not None:
+            try:
+                lon_f = float(longitude)
+                if lon_f < -180 or lon_f > 180:
+                    validation_errors.append(f"longitude {lon_f} out of bounds [-180, 180]")
+            except (ValueError, TypeError):
+                validation_errors.append("longitude is not a valid float")
+        else:
+            validation_errors.append("longitude is missing")
+
+        if humidity is not None:
+            try:
+                hum_i = int(humidity)
+                if hum_i < 0 or hum_i > 100:
+                    validation_errors.append(f"humidity {hum_i} out of bounds [0, 100]")
+            except (ValueError, TypeError):
+                validation_errors.append("humidity is not a valid integer")
+
+        is_valid = len(validation_errors) == 0
+        return is_valid, validation_errors
+
     def __init__(self, db: PipelineDB, batch_size: Optional[int] = None):
         self.db = db
         self.batch_size = batch_size or int(os.getenv("ETL_BATCH_SIZE", "500"))
@@ -98,41 +144,13 @@ class BronzeToSilverTransformer:
             currency = demographics.get("currency")
 
             # Data Quality Validation
-            validation_errors = []
-            if not user_id:
-                validation_errors.append("user_id is missing")
-            if pd.isna(timestamp):
-                validation_errors.append("timestamp is missing")
-
-            if latitude is not None:
-                try:
-                    lat_f = float(latitude)
-                    if lat_f < -90 or lat_f > 90:
-                        validation_errors.append(f"latitude {lat_f} out of bounds [-90, 90]")
-                except (ValueError, TypeError):
-                    validation_errors.append("latitude is not a valid float")
-            else:
-                validation_errors.append("latitude is missing")
-
-            if longitude is not None:
-                try:
-                    lon_f = float(longitude)
-                    if lon_f < -180 or lon_f > 180:
-                        validation_errors.append(f"longitude {lon_f} out of bounds [-180, 180]")
-                except (ValueError, TypeError):
-                    validation_errors.append("longitude is not a valid float")
-            else:
-                validation_errors.append("longitude is missing")
-
-            if humidity is not None:
-                try:
-                    hum_i = int(humidity)
-                    if hum_i < 0 or hum_i > 100:
-                        validation_errors.append(f"humidity {hum_i} out of bounds [0, 100]")
-                except (ValueError, TypeError):
-                    validation_errors.append("humidity is not a valid integer")
-
-            is_valid = len(validation_errors) == 0
+            is_valid, validation_errors = self.validate_record_quality(
+                user_id=user_id,
+                timestamp=timestamp,
+                latitude=latitude,
+                longitude=longitude,
+                humidity=humidity,
+            )
 
             silver_records.append({
                 "interaction_id": interaction_id,
