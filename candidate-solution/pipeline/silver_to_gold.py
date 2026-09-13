@@ -25,12 +25,12 @@ class SilverToGoldTransformer:
         q_lower = query.lower()
         if any(k in q_lower for k in ["clima", "weather", "temperatura", "humedad", "humidity"]):
             return "weather"
+        if any(k in q_lower for k in ["pico", "peak", "tránsito"]):
+            return "peak_hours"
         if any(k in q_lower for k in ["hora", "time", "timezone", "zona horaria"]):
             return "time"
         if any(k in q_lower for k in ["población", "population", "demographics", "demografía"]):
             return "demographics"
-        if any(k in q_lower for k in ["pico", "peak", "tránsito"]):
-            return "peak_hours"
         return "general_query"
 
     def run(self) -> int:
