@@ -177,7 +177,7 @@ class AgentWorkflow:
         final_state = await self.graph.ainvoke(initial_state)
 
         return {
-            "status": final_state.get("status", "success"),
+            "status": final_state.get("status", "failed"),
             "interaction_id": final_state.get("interaction_id"),
             "transaction_id": final_state["transaction_id"],
             "sentiment": final_state.get("sentiment"),
