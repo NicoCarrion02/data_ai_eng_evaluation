@@ -1,6 +1,6 @@
 """
 Demonstration script sending realistic domain-specific queries to the Agent
-running the live Ollama LLM (llama3.2:1b) enriched with real-time MCP facts.
+running the live Ollama LLM (llama3.2:3b) enriched with real-time MCP facts.
 Covers both Spanish and English language queries.
 """
 

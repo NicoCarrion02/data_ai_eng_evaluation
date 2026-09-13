@@ -216,6 +216,14 @@ Abre tu navegador en:
 
 Podrás ver los KPIs actualizándose en tiempo real, filtrar por ciudades e inspeccionar las métricas agregadas en la capa Gold.
 
+### 4. Demostración en Consola (Script de Prueba Rápida)
+Para verificar de forma inmediata el razonamiento del Agente interactuando con el Servidor FastMCP y el modelo de lenguaje, se incluye un script de demostración con casos de prueba reales en español e inglés:
+
+```bash
+python candidate-solution/run_llm_demo.py
+```
+*(No requiere librerías externas; opera directamente con la biblioteca estándar `urllib.request` de Python).*
+
 ---
 
 ## 6. Variables de Entorno
