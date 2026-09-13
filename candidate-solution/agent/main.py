@@ -5,14 +5,11 @@ FastAPI Agent Service - Entrypoint for receiving and processing transactions.
 import logging
 import os
 from typing import Any, Dict, Optional
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from agent.agent_workflow import AgentWorkflow
 from agent.database import AgentDatabase
-from dotenv import load_dotenv
-
-load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("agent.main")

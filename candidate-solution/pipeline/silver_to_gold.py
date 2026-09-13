@@ -41,7 +41,7 @@ class SilverToGoldTransformer:
         engine = self.db.get_engine()
 
         query = """
-            SELECT 
+            SELECT
                 et.city,
                 et.country,
                 et.timestamp,

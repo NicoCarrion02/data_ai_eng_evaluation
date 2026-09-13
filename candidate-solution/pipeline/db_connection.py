@@ -3,7 +3,6 @@ Database connection utilities for the ETL Pipeline.
 """
 
 import os
-from typing import Optional
 from dotenv import load_dotenv
 import psycopg2
 from sqlalchemy import create_engine

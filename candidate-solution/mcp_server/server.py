@@ -5,7 +5,7 @@ Exposes tools to consume and query the Location Service.
 
 import logging
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 # Compatible import across MCP 1.x and MCP 2.x
 try:
@@ -145,7 +145,6 @@ async def get_locations_by_country(country: str) -> List[Dict[str, Any]]:
 
 def get_asgi_app():
     """Build ASGI application supporting MCP SSE transport and health checks."""
-    import uvicorn
     from starlette.responses import JSONResponse
     from starlette.routing import Route
 

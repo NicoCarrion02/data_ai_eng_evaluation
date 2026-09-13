@@ -7,7 +7,7 @@ and persists into enriched_transactions.
 import json
 import logging
 import os
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 import pandas as pd
 from pipeline.db_connection import PipelineDB
 
@@ -76,7 +76,7 @@ class BronzeToSilverTransformer:
 
         # Identify unprocessed Bronze interactions up to batch_size
         query = f"""
-            SELECT 
+            SELECT
                 ai.interaction_id,
                 ai.transaction_id,
                 ai.user_id,
@@ -234,7 +234,7 @@ class BronzeToSilverTransformer:
         Execute Bronze -> Silver transformation with an immediate drain loop.
         Continuously processes batches back-to-back until all pending Bronze records
         are evacuated, preventing accumulation and snowball delays.
-        
+
         Returns:
             The total number of records processed across all drained batches.
         """

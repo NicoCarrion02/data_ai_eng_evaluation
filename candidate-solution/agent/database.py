@@ -9,7 +9,6 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, Optional
 import psycopg2
-from psycopg2.extras import RealDictCursor
 
 logger = logging.getLogger("agent.database")
 

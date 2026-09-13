@@ -7,7 +7,7 @@ Provides graceful fallback to direct location service if needed.
 import json
 import logging
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 import httpx
 from mcp import ClientSession
 from mcp.client.sse import sse_client
