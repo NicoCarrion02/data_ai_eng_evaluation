@@ -3,7 +3,7 @@ Database queries for Streamlit Dashboard consuming the Gold Layer and analytical
 """
 
 import os
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 import pandas as pd
 from sqlalchemy import create_engine
 
@@ -23,7 +23,7 @@ def fetch_gold_metrics() -> pd.DataFrame:
     """Fetch all records from Gold Layer (analytics_metrics)."""
     engine = get_db_engine()
     query = """
-        SELECT 
+        SELECT
             id,
             metric_date,
             city,
@@ -54,7 +54,6 @@ def fetch_gold_metrics() -> pd.DataFrame:
 
 def fetch_kpis() -> Dict[str, Any]:
     """Compute executive KPIs from Gold Layer with Bronze/Silver fallback."""
-    engine = get_db_engine()
     try:
         gold_df = fetch_gold_metrics()
         if not gold_df.empty:
@@ -112,7 +111,7 @@ def fetch_recent_transactions(limit: int = 50) -> pd.DataFrame:
     """Fetch recent enriched transactions from the helper view."""
     engine = get_db_engine()
     query = f"""
-        SELECT 
+        SELECT
             transaction_id,
             user_id,
             timestamp,
@@ -139,7 +138,7 @@ def fetch_city_summary() -> pd.DataFrame:
     """Fetch city statistics from helper view v_location_stats."""
     engine = get_db_engine()
     query = """
-        SELECT 
+        SELECT
             city,
             country,
             transaction_count,
